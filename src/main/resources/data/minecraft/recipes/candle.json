@@ -1,1 +1,24 @@
-{}
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "disabled"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:air"
+    }
+  },
+  "result": {
+    "count": 8,
+    "item": "minecraft:candle"
+  }
+}
