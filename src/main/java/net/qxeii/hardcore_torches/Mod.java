@@ -1,7 +1,5 @@
 package net.qxeii.hardcore_torches;
 
-import static net.qxeii.hardcore_torches.block.CandleBlock.STATE_TO_LUMINANCE;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,19 +26,16 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.qxeii.hardcore_torches.block.CandleBlock;
 import net.qxeii.hardcore_torches.block.FloorTorchBlock;
 import net.qxeii.hardcore_torches.block.GlowstoneBlock;
 import net.qxeii.hardcore_torches.block.LanternBlock;
 import net.qxeii.hardcore_torches.block.ShroomlightBlock;
 import net.qxeii.hardcore_torches.block.WallTorchBlock;
-import net.qxeii.hardcore_torches.blockentity.CandleBlockEntity;
 import net.qxeii.hardcore_torches.blockentity.GlowstoneBlockEntity;
 import net.qxeii.hardcore_torches.blockentity.LanternBlockEntity;
 import net.qxeii.hardcore_torches.blockentity.ShroomlightBlockEntity;
 import net.qxeii.hardcore_torches.blockentity.TorchBlockEntity;
 import net.qxeii.hardcore_torches.config.ModConfig;
-import net.qxeii.hardcore_torches.item.CandleItem;
 import net.qxeii.hardcore_torches.item.FuelCanItem;
 import net.qxeii.hardcore_torches.item.GlowstoneItem;
 import net.qxeii.hardcore_torches.item.LanternItem;
@@ -49,7 +44,6 @@ import net.qxeii.hardcore_torches.item.TorchItem;
 import net.qxeii.hardcore_torches.loot.HCTLootNumberProviderTypes;
 import net.qxeii.hardcore_torches.loot.LanternLootFunction;
 import net.qxeii.hardcore_torches.loot.TorchLootFunction;
-import net.qxeii.hardcore_torches.recipe.CandleRecipe;
 import net.qxeii.hardcore_torches.recipe.FuelCanRecipe;
 import net.qxeii.hardcore_torches.recipe.UnlitLanternRecipe;
 import net.qxeii.hardcore_torches.recipe.UnlitTorchRecipe;
@@ -72,7 +66,6 @@ public class Mod implements ModInitializer {
 			new Identifier("hardcore_torches", "multi_use_lighter_items"));
 	public static final TagKey<Item> SINGLE_USE_LIGHTER_ITEMS = TagKey.of(RegistryKeys.ITEM,
 			new Identifier("hardcore_torches", "single_use_lighter_items"));
-	public static final TagKey<Item> CANDLES = TagKey.of(RegistryKeys.ITEM, new Identifier("minecraft", "candles"));
 
 	public static final TagKey<Item> LIQUID_FUELS = TagKey.of(RegistryKeys.ITEM,
 			new Identifier("hardcore_torches", "liquid_fuels"));
@@ -102,58 +95,6 @@ public class Mod implements ModInitializer {
 	public static final Block BURNT_TORCH = new FloorTorchBlock(
 			FabricBlockSettings.create().noCollision().breakInstantly().sounds(BlockSoundGroup.WOOD), null,
 			ETorchState.BURNT, () -> config.defaultTorchFuel);
-
-	public static final Block CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block WHITE_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block BLUE_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block RED_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block PURPLE_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block YELLOW_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block BLACK_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block CYAN_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block GRAY_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block BROWN_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block GREEN_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block LIGHT_BLUE_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block LIGHT_GRAY_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block LIME_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block MAGENTA_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block ORANGE_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
-	public static final Block PINK_CANDLE = new CandleBlock(
-			FabricBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.CANDLE).luminance(STATE_TO_LUMINANCE),
-			() -> config.defaultCandleFuel, false);
 
 	public static final Block GLOWSTONE = new GlowstoneBlock(FabricBlockSettings.create().strength(1)
 			.sounds(BlockSoundGroup.GLASS).luminance(GlowstoneBlock.STATE_TO_LUMINANCE),
@@ -190,7 +131,6 @@ public class Mod implements ModInitializer {
 
 	public static BlockEntityType<TorchBlockEntity> TORCH_BLOCK_ENTITY;
 	public static BlockEntityType<LanternBlockEntity> LANTERN_BLOCK_ENTITY;
-	public static BlockEntityType<CandleBlockEntity> CANDLE_BLOCK_ENTITY;
 	public static BlockEntityType<GlowstoneBlockEntity> GLOWSTONE_BLOCK_ENTITY;
 	public static BlockEntityType<ShroomlightBlockEntity> SHROOMLIGHT_BLOCK_ENTITY;
 
@@ -204,12 +144,10 @@ public class Mod implements ModInitializer {
 	public static final RecipeType<FuelCanRecipe> FUEL_CAN_RECIPE = RecipeType.register("hardcore_torches:fuel_can");
 	public static final RecipeType<UnlitTorchRecipe> TORCH_RECIPE = RecipeType.register("hardcore_torches:torch");
 	public static final RecipeType<UnlitLanternRecipe> LANTERN_RECIPE = RecipeType.register("hardcore_torches:lantern");
-	public static final RecipeType<CandleRecipe> CANDLE_RECIPE = RecipeType.register("hardcore_torches:candle");
 
 	public static RecipeSerializer<FuelCanRecipe> FUEL_RECIPE_SERIALIZER;
 	public static RecipeSerializer<UnlitTorchRecipe> UNLIT_TORCH_RECIPE_SERIALIZER;
 	public static RecipeSerializer<UnlitLanternRecipe> UNLIT_LANTERN_RECIPE_SERIALIZER;
-	public static RecipeSerializer<CandleRecipe> CANDLE_RECIPE_SERIALIZER;
 
 	@Override
 	public void onInitialize() {
@@ -240,26 +178,6 @@ public class Mod implements ModInitializer {
 				UNLIT_LANTERN
 		};
 
-		Block[] teCandleBlocks = new Block[] {
-				CANDLE,
-				WHITE_CANDLE,
-				BLUE_CANDLE,
-				BLACK_CANDLE,
-				BROWN_CANDLE,
-				CYAN_CANDLE,
-				GRAY_CANDLE,
-				GREEN_CANDLE,
-				LIGHT_BLUE_CANDLE,
-				LIGHT_GRAY_CANDLE,
-				LIME_CANDLE,
-				MAGENTA_CANDLE,
-				ORANGE_CANDLE,
-				PINK_CANDLE,
-				PURPLE_CANDLE,
-				RED_CANDLE,
-				YELLOW_CANDLE
-		};
-
 		Block[] teGlowstoneBlocks = new Block[] {
 				GLOWSTONE
 		};
@@ -276,8 +194,6 @@ public class Mod implements ModInitializer {
 
 		TORCH_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, "hardcore_torches:torch_block_entity",
 				FabricBlockEntityTypeBuilder.create(TorchBlockEntity::new, teTorchBlocks).build(null));
-		CANDLE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, "hardcore_torches:candle_block_entity",
-				FabricBlockEntityTypeBuilder.create(CandleBlockEntity::new, teCandleBlocks).build(null));
 		LANTERN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, "hardcore_torches:lantern_entity",
 				FabricBlockEntityTypeBuilder.create(LanternBlockEntity::new, teLanternBlocks).build(null));
 		GLOWSTONE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, "hardcore_torches:glowstone_entity",
@@ -296,24 +212,6 @@ public class Mod implements ModInitializer {
 		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "smoldering_wall_torch"),
 				SMOLDERING_WALL_TORCH);
 		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "burnt_wall_torch"), BURNT_WALL_TORCH);
-
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "candle"), CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "black_candle"), BLACK_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "blue_candle"), BLUE_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "brown_candle"), BROWN_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "cyan_candle"), CYAN_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "gray_candle"), GRAY_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "green_candle"), GREEN_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "light_blue_candle"), LIGHT_BLUE_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "light_gray_candle"), LIGHT_GRAY_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "lime_candle"), LIME_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "magenta_candle"), MAGENTA_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "orange_candle"), ORANGE_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "pink_candle"), PINK_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "purple_candle"), PURPLE_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "red_candle"), RED_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "white_candle"), WHITE_CANDLE);
-		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "yellow_candle"), YELLOW_CANDLE);
 
 		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "lit_lantern"), LIT_LANTERN);
 		Registry.register(Registries.BLOCK, new Identifier("hardcore_torches", "unlit_lantern"), UNLIT_LANTERN);
@@ -336,41 +234,6 @@ public class Mod implements ModInitializer {
 				new LanternItem(LIT_LANTERN, new FabricItemSettings().maxCount(1), config.defaultLanternFuel, true));
 		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "unlit_lantern"),
 				new LanternItem(UNLIT_LANTERN, new FabricItemSettings().maxCount(1), config.defaultLanternFuel, false));
-
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "candle"),
-				new CandleItem(CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "black_candle"),
-				new CandleItem(BLACK_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "blue_candle"),
-				new CandleItem(BLUE_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "brown_candle"),
-				new CandleItem(BROWN_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "cyan_candle"),
-				new CandleItem(CYAN_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "gray_candle"),
-				new CandleItem(GRAY_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "green_candle"),
-				new CandleItem(GREEN_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "light_blue_candle"),
-				new CandleItem(LIGHT_BLUE_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "light_gray_candle"),
-				new CandleItem(LIGHT_GRAY_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "lime_candle"),
-				new CandleItem(LIME_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "magenta_candle"),
-				new CandleItem(MAGENTA_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "orange_candle"),
-				new CandleItem(ORANGE_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "pink_candle"),
-				new CandleItem(PINK_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "purple_candle"),
-				new CandleItem(PURPLE_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "red_candle"),
-				new CandleItem(RED_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "white_candle"),
-				new CandleItem(WHITE_CANDLE, new FabricItemSettings()));
-		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "yellow_candle"),
-				new CandleItem(YELLOW_CANDLE, new FabricItemSettings()));
 
 		Registry.register(Registries.ITEM, new Identifier("hardcore_torches", "glowstone"),
 				new GlowstoneItem(GLOWSTONE, new FabricItemSettings(), Mod.config.defaultGlowstoneFuel, true));
@@ -395,26 +258,7 @@ public class Mod implements ModInitializer {
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(BURNT_TORCH));
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(LIT_LANTERN));
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(UNLIT_LANTERN));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(BLACK_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(BLUE_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(BROWN_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(CYAN_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(GRAY_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(GREEN_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(LIGHT_BLUE_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(LIGHT_GRAY_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(LIME_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(MAGENTA_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(ORANGE_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(PINK_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(PURPLE_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(RED_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(WHITE_CANDLE));
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(YELLOW_CANDLE));
-
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(GLOWSTONE));
-
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> entries.add(SHROOMLIGHT));
 
 		// Recipe Types
@@ -426,9 +270,6 @@ public class Mod implements ModInitializer {
 
 		UNLIT_LANTERN_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,
 				new Identifier("hardcore_torches", "unlit_lantern"), new UnlitLanternRecipe.Serializer());
-
-		CANDLE_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,
-				new Identifier("hardcore_torches", "candle"), new CandleRecipe.Serializer());
 
 	}
 }

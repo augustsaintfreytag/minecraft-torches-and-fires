@@ -1,5 +1,9 @@
 package net.qxeii.hardcore_torches;
 
+import static net.minecraft.state.property.Properties.LEVEL_15;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -7,9 +11,6 @@ import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.ColorHelper;
-import org.jetbrains.annotations.Nullable;
-
-import static net.minecraft.state.property.Properties.LEVEL_15;
 
 public class ClientMod implements ClientModInitializer, RenderAttachmentBlockEntity {
 	@Override
@@ -28,24 +29,6 @@ public class ClientMod implements ClientModInitializer, RenderAttachmentBlockEnt
 
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.LIT_LANTERN, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.UNLIT_LANTERN, RenderLayer.getCutout());
-
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.BLACK_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.BLUE_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.BROWN_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.CYAN_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.GRAY_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.GREEN_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.LIGHT_GRAY_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.LIGHT_BLUE_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.LIME_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.MAGENTA_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.ORANGE_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.PINK_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.PURPLE_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.RED_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.WHITE_CANDLE, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(Mod.YELLOW_CANDLE, RenderLayer.getCutout());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.GLOWSTONE, RenderLayer.getCutout());
 		ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> {

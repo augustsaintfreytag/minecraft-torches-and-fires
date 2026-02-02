@@ -1,24 +1,24 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "disabled"
-      ]
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": [
-    "#"
-  ],
   "key": {
-    "#": {
-      "item": "minecraft:air"
+	"P": {
+	  "item": "minecraft:paper"
+	},
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "S": {
+      "item": "minecraft:string"
     }
   },
+  "pattern": [
+    " S ",
+    "PHP",
+	" P "
+  ],
   "result": {
-    "count": 8,
     "item": "minecraft:candle"
-  }
+  },
+  "show_notification": true
 }
