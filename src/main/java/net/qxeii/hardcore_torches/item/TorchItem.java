@@ -2,7 +2,6 @@ package net.qxeii.hardcore_torches.item;
 
 import static net.minecraft.util.math.MathHelper.clamp;
 
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -23,16 +22,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.qxeii.hardcore_torches.ClientMod;
 import net.qxeii.hardcore_torches.Mod;
 import net.qxeii.hardcore_torches.util.ETorchState;
 import net.qxeii.hardcore_torches.util.TorchGroup;
 import net.qxeii.hardcore_torches.util.WorldUtils;
 
 public class TorchItem extends VerticallyAttachableBlockItem implements LightableItem {
-
-	// Configuration
-
-	private static final long INTERACTION_PREVENTION_COOLDOWN_TICKS = 50;
 
 	// Properties
 
@@ -41,8 +37,6 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 	public TorchGroup torchGroup;
 
 	public int maxFuel;
-
-	public long lastPreventingInteractionTick = 0;
 
 	// Init
 
@@ -53,17 +47,6 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		this.torchGroup = group;
 		this.torchState = torchState;
 		this.maxFuel = maxFuel;
-
-		UseItemCallback.EVENT.register((player, world, hand) -> {
-			var stackInHand = player.getStackInHand(hand);
-
-			if (!stackInHand.getItem().isFood()) {
-				return TypedActionResult.pass(stackInHand);
-			}
-
-			lastPreventingInteractionTick = world.getTime();
-			return TypedActionResult.pass(stackInHand);
-		});
 	}
 
 	// State & Properties
@@ -172,28 +155,33 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		return oldNbt == null || oldNbt.equals(null);
 	}
 
-	private boolean didRecentlyUsePreventingItem(World world) {
-		return lastPreventingInteractionTick + INTERACTION_PREVENTION_COOLDOWN_TICKS > world.getTime();
+	private boolean didRecentlyConsumePreventingItem(World world) {
+		if (!world.isClient()) {
+			return false;
+		}
+
+		return ClientMod.INTERACTION_MANAGER.didConsumeItemWithinTimeout(world);
 	}
 
 	// Interaction
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-		if (world.isClient) {
+		var stack = player.getStackInHand(hand);
+
+		if (world.isClient()) {
+			if (Mod.config.preventUnwantedOffHandInteraction && hand == Hand.OFF_HAND
+					&& didRecentlyConsumePreventingItem(world)) {
+				return TypedActionResult.fail(stack);
+			}
+
 			return super.use(world, player, hand);
 		}
 
-		ItemStack stack = player.getStackInHand(hand);
-		ETorchState torchState = ((TorchItem) stack.getItem()).getTorchState();
+		var torchState = ((TorchItem) stack.getItem()).getTorchState();
 
 		if (player.isSneaking()) {
 			displayFuelMessage(world, player, stack);
-			return super.use(world, player, hand);
-		}
-
-		if (Mod.config.preventUnwantedOffHandInteraction && hand == Hand.OFF_HAND
-				&& didRecentlyUsePreventingItem(world)) {
 			return super.use(world, player, hand);
 		}
 
@@ -330,7 +318,7 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		var hand = context.getHand();
 
 		if (Mod.config.preventUnwantedOffHandInteraction && hand == Hand.OFF_HAND
-				&& didRecentlyUsePreventingItem(world)) {
+				&& didRecentlyConsumePreventingItem(world)) {
 			return super.useOnBlock(context);
 		}
 
