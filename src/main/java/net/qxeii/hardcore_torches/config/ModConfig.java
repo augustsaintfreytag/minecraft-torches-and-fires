@@ -84,9 +84,6 @@ public class ModConfig implements ConfigData {
 	@Comment("Default: fuel that a lantern starts with when crafted. Default: 0")
 	public int startingLanternFuel = 0;
 
-	@Comment("The fuel that candles start with. Default: 6400")
-	public int defaultCandleFuel = 6400;
-
 	@Comment("The fuel that glowstone starts with. Default: 576000")
 	public int defaultGlowstoneFuel = 576000;
 
@@ -143,9 +140,6 @@ public class ModConfig implements ConfigData {
 
 	@Comment("How many torches are crafted. Default: 2")
 	public int craftAmount = 2;
-
-	@Comment("How many candles are crafted. Default: 4")
-	public int candleCraftAmount = 4;
 
 	// World Configuration
 

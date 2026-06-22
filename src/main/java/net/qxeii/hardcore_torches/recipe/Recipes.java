@@ -1,10 +1,11 @@
 package net.qxeii.hardcore_torches.recipe;
 
+import java.util.ArrayList;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
+import net.minecraft.util.Identifier;
 
 public class Recipes {
 

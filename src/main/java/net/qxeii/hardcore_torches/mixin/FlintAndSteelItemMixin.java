@@ -35,8 +35,7 @@ public class FlintAndSteelItemMixin {
 		BlockState blockState = world.getBlockState(blockPos);
 
 		if (!CampfireBlock.canBeLit(blockState) && !CandleBlock.canBeLit(blockState)
-				&& !CandleCakeBlock.canBeLit(blockState)
-				&& !net.qxeii.hardcore_torches.block.CandleBlock.canBeLit(blockState)) {
+				&& !CandleCakeBlock.canBeLit(blockState)) {
 			BlockPos blockPos2 = blockPos.offset(context.getSide());
 			if (AbstractFireBlock.canPlaceAt(world, blockPos2, context.getHorizontalPlayerFacing())) {
 				world.playSound(playerEntity, blockPos2, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F,
