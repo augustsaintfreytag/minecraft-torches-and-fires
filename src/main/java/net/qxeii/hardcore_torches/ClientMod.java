@@ -11,12 +11,27 @@ import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.ColorHelper;
+import net.qxeii.hardcore_torches.util.ClientInteractionManager;
 
 public class ClientMod implements ClientModInitializer, RenderAttachmentBlockEntity {
+
+	// References
+
+	public static ClientInteractionManager INTERACTION_MANAGER;
+
+	// Init
+
 	@Override
 	public void onInitializeClient() {
-		// This makes it so the torches don't render with black instead of transparency
+		initializeBlockVisuals();
+		initializeInteractionManager();
+	}
 
+	public static void initializeInteractionManager() {
+		INTERACTION_MANAGER = new ClientInteractionManager();
+	}
+
+	public static void initializeBlockVisuals() {
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.LIT_TORCH, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.UNLIT_TORCH, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.SMOLDERING_TORCH, RenderLayer.getCutout());
@@ -31,15 +46,19 @@ public class ClientMod implements ClientModInitializer, RenderAttachmentBlockEnt
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.UNLIT_LANTERN, RenderLayer.getCutout());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.GLOWSTONE, RenderLayer.getCutout());
+
 		ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> {
 			float lerp = state.get(LEVEL_15) / 15.0F;
 			return ColorHelper.Argb.lerp(lerp, 0x44403B, 0xFFFFFF);
 		}, Mod.GLOWSTONE);
+
 		BlockRenderLayerMap.INSTANCE.putBlock(Mod.SHROOMLIGHT, RenderLayer.getCutout());
+
 		ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> {
 			float lerp = state.get(LEVEL_15) / 15.0F;
 			return ColorHelper.Argb.lerp(lerp, 0x44403B, 0xFFFFFF);
 		}, Mod.SHROOMLIGHT);
+
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			NbtCompound nbt = stack.getNbt();
 			int fuel = Mod.config.defaultShroomlightFuel;
@@ -51,6 +70,7 @@ public class ClientMod implements ClientModInitializer, RenderAttachmentBlockEnt
 			float lerp = (float) fuel / Mod.config.defaultShroomlightFuel;
 			return ColorHelper.Argb.lerp(lerp, 0x44403B, 0xFFFFFF);
 		}, Mod.SHROOMLIGHT);
+
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			NbtCompound nbt = stack.getNbt();
 			int fuel = Mod.config.defaultGlowstoneFuel;
